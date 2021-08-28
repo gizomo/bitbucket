@@ -1,6 +1,6 @@
 <template>
 	<div class="devices">
-		<i class="material-icons" :class="{ active: isMobile }"
+		<i class="material-icons" :class="{ active: (isMobile && !isTablet) }"
 			>smartphone</i
 		>
 		<i class="material-icons" :class="{ active: isTablet }"

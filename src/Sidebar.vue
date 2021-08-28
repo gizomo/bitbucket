@@ -47,7 +47,7 @@ export default {
 	top: 0;
 	height: 100vh;
 	min-width: 240px;
-	padding-top: 3rem;
+	padding-top: 3.5rem;
 	color: #fff;
 	background-color: #35434c;
 	border-left: 2px solid #f97252;
@@ -68,7 +68,7 @@ export default {
 	background-color: #2c3941;
 }
 .menu-item:hover {
-  background-color: #2c2c2c;
+	background-color: #2c2c2c;
 }
 .slide-enter-active,
 .slide-leave-active {
@@ -79,5 +79,14 @@ export default {
 .slide-leave-to {
 	transform: translateX(-100%);
 	transition: all 150ms ease-in 0s;
+}
+
+@media screen and (max-width: 40em) {
+	.sidebar-panel {
+		min-width: 100%;
+	}
+	.menu-item {
+		padding: 2rem;
+	}
 }
 </style>

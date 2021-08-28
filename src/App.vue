@@ -45,7 +45,8 @@ export default {
 				},
 			})
 			const data = await response.json()
-			this.menu = data.menu
+			let set = new Set()
+			this.menu = data.menu.filter(obj => set.size !== set.add(obj.id).size)
 			this.currentPage = this.menu.find(page => page.id == 1)['content']
 		} catch (e) {
 			console.log(e)
@@ -58,5 +59,7 @@ export default {
 body {
 	padding: 0;
 	margin: 0;
+	font-family: 'Roboto', sans-serif;
+	font-size: 1.25rem;
 }
 </style>
