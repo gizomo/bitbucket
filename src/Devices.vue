@@ -26,7 +26,7 @@ export default {
 	},
 }
 </script>
-<style scoped>
+<style lang="less" scoped>
 .devices {
 	position: fixed;
 	left: 0;
@@ -34,9 +34,10 @@ export default {
 	display: flex;
 	justify-content: center;
 	background-color: #fff;
-}
-.devices i {
-	padding: 1rem;
+	z-index: 2;
+	i {
+		padding: 1rem;
+	}
 }
 .active {
 	background-color: #ebebeb;

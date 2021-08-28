@@ -16,7 +16,11 @@
 				</div>
 				<button
 					class="page-button"
-					v-if="!isFullText && pageContent.full_text && pageContent.full_text_btn_title"
+					v-if="
+						!isFullText &&
+							pageContent.full_text &&
+							pageContent.full_text_btn_title
+					"
 					@click.prevent="openPage"
 				>
 					{{ pageContent.full_text_btn_title }}
@@ -44,7 +48,7 @@ export default {
 	},
 }
 </script>
-<style scoped>
+<style lang="less" scoped>
 .page {
 	min-height: 100vh;
 	width: 100%;
@@ -52,6 +56,17 @@ export default {
 	align-items: center;
 	color: #fff;
 	background-color: #f97252;
+}
+.page::before {
+	position: absolute;
+	content: '';
+	display: inline-block;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 7rem;
+	background-color: #2c2c2c;
+	z-index: 1;
 }
 .page-content {
 	width: 100%;
@@ -79,7 +94,9 @@ export default {
 	font-size: 2.5rem;
 	font-weight: 700;
 }
-.page-summary,
+.page-summary {
+	margin: 2.5rem 0;
+}
 .page-full-text {
 	margin: 2.5rem 0;
 }
@@ -94,34 +111,30 @@ export default {
 	cursor: pointer;
 	transition: all 0.3s ease;
 	position: relative;
-}
-
-.page-button {
 	overflow: hidden;
 	transition: all 0.3s ease;
+	&:hover {
+		filter: saturate(0.2);
+		color: #fff;
+		&::before {
+			position: absolute;
+			content: '';
+			display: inline-block;
+			top: -180px;
+			left: 0;
+			width: 30px;
+			height: 100%;
+			background-color: #fff;
+			animation: shiny-btn 3s ease-in-out infinite;
+		}
+	}
+	&:active {
+		box-shadow: 4px 4px 6px 0 rgba(255, 255, 255, 0.3),
+			-4px -4px 6px 0 rgba(116, 125, 136, 0.2),
+			inset -4px -4px 6px 0 rgba(255, 255, 255, 0.2),
+			inset 4px 4px 6px 0 rgba(0, 0, 0, 0.2);
+	}
 }
-.page-button:hover {
-	filter: saturate(0.2);
-	color: #fff;
-}
-.page-button:hover::before {
-	position: absolute;
-	content: '';
-	display: inline-block;
-	top: -180px;
-	left: 0;
-	width: 30px;
-	height: 100%;
-	background-color: #fff;
-	animation: shiny-btn 3s ease-in-out infinite;
-}
-.page-button:active {
-	box-shadow: 4px 4px 6px 0 rgba(255, 255, 255, 0.3),
-		-4px -4px 6px 0 rgba(116, 125, 136, 0.2),
-		inset -4px -4px 6px 0 rgba(255, 255, 255, 0.2),
-		inset 4px 4px 6px 0 rgba(0, 0, 0, 0.2);
-}
-
 @-webkit-keyframes shiny-btn {
 	20% {
 		-webkit-transform: scale(0) rotate(45deg);
@@ -140,7 +153,6 @@ export default {
 		opacity: 0;
 	}
 }
-
 @media screen and (max-width: 40em) {
 	.page-content {
 		display: block;

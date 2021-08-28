@@ -35,10 +35,10 @@ export default {
 	},
 }
 </script>
-<style scoped>
+<style lang="less" scoped>
 .sidebar {
 	position: relative;
-	z-index: 10;
+	z-index: 3;
 }
 .sidebar-panel {
 	overflow-y: auto;
@@ -66,21 +66,24 @@ export default {
 	padding: 1rem;
 	border-bottom: 1px solid #35434c;
 	background-color: #2c3941;
+	&:hover {
+		background-color: #2c2c2c;
+	}
 }
-.menu-item:hover {
-	background-color: #2c2c2c;
+.slide-enter-active {
+	transition: transform 0.2s ease;
 }
-.slide-enter-active,
 .slide-leave-active {
 	transition: transform 0.2s ease;
 }
-
-.slide-enter,
+.slide-enter {
+	transform: translateX(-100%);
+	transition: all 150ms ease-in 0s;
+}
 .slide-leave-to {
 	transform: translateX(-100%);
 	transition: all 150ms ease-in 0s;
 }
-
 @media screen and (max-width: 40em) {
 	.sidebar-panel {
 		min-width: 100%;

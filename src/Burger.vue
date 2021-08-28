@@ -22,18 +22,18 @@ export default {
 	},
 }
 </script>
-<style>
+<style lang="less" scoped>
 #burger {
 	position: fixed;
 	top: 1rem;
 	left: 1rem;
-	z-index: 100;
+	z-index: 10;
 }
 button {
 	cursor: pointer;
-}
-button:focus {
-	outline: 0;
+	&:focus {
+		outline: 0;
+	}
 }
 .burger-button {
 	position: relative;
@@ -46,6 +46,11 @@ button:focus {
 	background-color: transparent;
 	pointer-events: all;
 	transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+	&:hover {
+		.burger-bar--2 {
+			transform: scaleX(1);
+		}
+	}
 }
 .burger-bar {
 	background-color: #130f40;
@@ -68,28 +73,31 @@ button:focus {
 	transform-origin: 100% 50%;
 	transform: scaleX(0.8);
 }
-.burger-button:hover .burger-bar--2 {
-	transform: scaleX(1);
-}
-.no-touchevents .burger-bar--2:hover {
-	transform: scaleX(1);
+.no-touchevents {
+	.burger-bar--2 {
+		&:hover {
+			transform: scaleX(1);
+		}
+	}
 }
 .burger-bar--3 {
 	transform: translateY(6px);
 }
-#burger.active .burger-button {
-	transform: rotate(-180deg);
-}
-#burger.active .burger-bar {
-	background-color: #fff;
-}
-#burger.active .burger-bar--1 {
-	transform: rotate(45deg);
-}
-#burger.active .burger-bar--2 {
-	opacity: 0;
-}
-#burger.active .burger-bar--3 {
-	transform: rotate(-45deg);
+#burger.active {
+	.burger-button {
+		transform: rotate(-180deg);
+	}
+	.burger-bar {
+		background-color: #fff;
+	}
+	.burger-bar--1 {
+		transform: rotate(45deg);
+	}
+	.burger-bar--2 {
+		opacity: 0;
+	}
+	.burger-bar--3 {
+		transform: rotate(-45deg);
+	}
 }
 </style>
