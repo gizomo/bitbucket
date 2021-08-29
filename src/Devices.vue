@@ -1,6 +1,6 @@
 <template>
 	<div class="devices">
-		<i class="material-icons" :class="{ active: (isMobile && !isTablet) }"
+		<i class="material-icons" :class="{ active: isMobile }"
 			>smartphone</i
 		>
 		<i class="material-icons" :class="{ active: isTablet }"
@@ -14,13 +14,13 @@
 	</div>
 </template>
 <script>
-import { isMobile, isTablet } from 'mobile-device-detect'
+import { isMobileOnly, isTablet } from 'mobile-device-detect'
 
 export default {
 	name: 'App',
 	data() {
 		return {
-			isMobile: isMobile,
+			isMobile: isMobileOnly,
 			isTablet: isTablet,
 		}
 	},

@@ -1,11 +1,13 @@
 <template>
 	<devices />
-	<burger @toggleBurger="openBurger" ref="burger"/>
-	<sidebar :isOpen="isBurgerOpen" @openPage="loadPage" :menu="menu" />
+	<burger @toggleBurger="openBurger" ref="burger" />
+	<sidebar :isOpen="isBurgerOpen" @openPage="loadPage" :menu="data" />
 	<page :pageContent="currentPage" ref="page" />
 </template>
 
 <script>
+import { computed, ref } from 'vue'
+import { swr } from './swr.js'
 import Devices from './Devices.vue'
 import Burger from './Burger.vue'
 import Sidebar from './Sidebar.vue'
@@ -13,45 +15,44 @@ import Page from './Page.vue'
 
 export default {
 	name: 'App',
-	components: {
+		components: {
 		Devices,
 		Burger,
 		Sidebar,
 		Page,
 	},
-	data() {
-		return {
-			menu: [],
-			currentPage: {},
-			isBurgerOpen: false,
-		}
-	},
-	methods: {
-		openBurger(toggle) {
-			this.isBurgerOpen = toggle
-		},
-    loadPage(id) {
-      this.currentPage = this.menu.find(page => page.id == id)['content']
-      this.$refs.burger.toggle()
-      this.$refs.page.isFullText = false
-    }
-	},
-	async created() {
-		try {
-			const response = await fetch('site.json', {
-				headers: {
-					'Content-Type': 'application/json',
-					Accept: 'application/json',
-				},
-			})
-			const data = await response.json()
+	setup() {
+		const cache = swr(
+			'menu',
+			fetch('site.json')
+				.then(response => response.json()),
+			[]
+		)
+		const isLoading = computed(() => !cache.data.menu.length && cache.isRevalidating)
+		const isError = computed(() => cache.isError)
+		const error = computed(() => cache.error)
+		const data = computed(() => {
 			let set = new Set()
-			this.menu = data.menu.filter(obj => set.size !== set.add(obj.id).size)
-			this.currentPage = this.menu.find(page => page.id == 1)['content']
-		} catch (e) {
-			console.log(e)
+			return cache.data.menu.filter(obj => set.size !== set.add(obj.id).size)
+		})
+		let currentPage = ref(data.value.find(page => page.id == 1)['content'])
+		let isBurgerOpen = ref(false)
+
+		const burger = ref()
+		const page = ref()
+
+		function openBurger(toggle) {
+			isBurgerOpen.value = toggle
 		}
-	},
+
+		function loadPage(id) {
+			currentPage.value = data.value.find(page => page.id == id)['content']
+			burger.value.toggle()
+			page.value.isFullText = false
+		}
+
+		return { isLoading, isError, error, data, currentPage, isBurgerOpen, openBurger, loadPage, burger, page }
+	}
 }
 </script>
 
